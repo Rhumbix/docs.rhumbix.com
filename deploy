@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [ "$1" == "-h" -o "$1" == "--help" -o "$1" == "man" ]; then
+  echo "Remove sensitive data from a rendered swagger.json and deploy the updates to docs.rhumbix.com."
+  echo "Either provide the path to the *RENDERED* json or this script will infer its location."
+  echo "Usage: `basename $0` /path/to/rendered/swagger/for/public-api.json"
+  exit 0
+fi
+
+THISDIR=$( cd $(dirname $0) ; pwd )
+
+UPDIR=$( cd .. ; pwd )
+SWAGGER_PATH="$UPDIR/rmbx_django/public-api/.swagger-public-api.rendered.json"
+if [ "$1" ]; then
+  SWAGGER_PATH=$1
+fi
+
+FNAME="swagger-public-api-docs.json"
+OUTFILE="$THISDIR/$FNAME"
+
+CMD="$THISDIR/clean_json.py $SWAGGER_PATH -r \"^x-amazon.?\" -o $OUTFILE"
+if eval $CMD ; then
+    echo "* New swagger cleaned and ready: $OUTFILE."
+else
+    exit 1
+fi
+
+GITCMD="cd $THISDIR; git add index.html $FNAME; git commit -m 'updated docs'; git push origin master"
+echo "* Checking Github... *"
+if eval $GITCMD ; then
+    echo "** Done: docs.rhumbix.com **"
+else
+    exit 1
+fi

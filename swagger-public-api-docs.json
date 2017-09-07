@@ -1,8 +1,11 @@
 {
   "info": {
     "version": "1.0.1", 
-    "description": "The Rhumbix API is intended for use by Rhumbix customers and partners to build integrations with the Rhumbix application. The API is designed to support regular updates and queries in batch requests. Rhumbix primarily manages data for construction workers in the field. Integrations should be aware that updates to this data will directly influence the users of the mobile and web application. For access to the API, contact your Rhumbix support representitive. Further application documentation and support can be found at https://rhumbix.desk.com/ \n\nThe usual order of operation is like this: \n1) You post data to the API with your unique company_key and x-api-key. \n2) The request is put into a queue of requests (sometimes requests are very large) and you receive back a batch_key to check the status of your request. \n3) You check the unique URL of your request using your new batch_key, your company_key and x-api-key until its status is COMPLETE.", 
-    "title": "RMBX"
+    "description": "The Rhumbix API is intended for use by Rhumbix customers and partners to build integrations with the Rhumbix application. The API is designed to support regular updates and queries in batch requests. Rhumbix primarily manages data for construction workers in the field. Integrations should be aware that updates to this data will directly influence the users of the mobile and web application. For access to the API, contact your Rhumbix support representitive. Further application documentation and support can be found at https://rhumbix.desk.com/ \n# Overview\nThe usual order of operation is like this: \n1) You post data to the API with your unique company_key and x-api-key. \n2) The request is put into a queue of requests (sometimes requests are very large) and you receive back a batch_key to check the status of your request. \n3) You check the unique URL of your request using your new batch_key, your company_key and x-api-key until its status is COMPLETE. \n# Authentication\nAuthentication is handled via a token system and a unique company_key. You can create a company_key and retrieve an api token key by logging in to the Rhumbix platform. Once you have an access token, you can interact with the API by including the following header in HTTP GET and POST requests.\n```{\n  \"x-api-key\": \"abcdefghijklmnopqrstuvwxyz0123456789\" \n}```", 
+    "x-logo": {
+      "url": "https://s3.amazonaws.com/rmbx-export-assets/rmbx_horizontal_logo_colored.png"
+    }, 
+    "title": "Rhumbix Public API"
   }, 
   "paths": {
     "/{company_key}/batch/employee/import": {
@@ -705,7 +708,28 @@
               "type": "object", 
               "example": {
                 "status": "COMPLETE", 
-                "errors": {}
+                "errors": {
+                  "": {
+                    "company_supplied_id": [
+                      "This field is required."
+                    ]
+                  }, 
+                  "BOB123": {
+                    "phone": [
+                      "This field must be unique."
+                    ], 
+                    "email": [
+                      "This field must be unique."
+                    ]
+                  }, 
+                  "LARRY6": {
+                    "project_job_numbers": {
+                      "non_existant_ProjectABC": [
+                        "This job number does not exist."
+                      ]
+                    }
+                  }
+                }
               }, 
               "properties": {
                 "status": {
@@ -1017,6 +1041,12 @@
         }, 
         "phone": {
           "type": "string"
+        }, 
+        "project_job_numbers": {
+          "items": {
+            "type": "string"
+          }, 
+          "type": "array"
         }, 
         "email": {
           "type": "string"

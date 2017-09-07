@@ -77,6 +77,16 @@
           }
         ], 
         "operationId": "batchEmployeeImport", 
+        "x-code-samples": [
+          {
+            "lang": "Python", 
+            "source": "import requests\ndata = [\n    {\n        'company_supplied_id': 'alexa', \n        'user_role': 'WORKER', \n        'first_name': 'Alex', \n'        last_name': 'Alexander'\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://foo-bar.rhumbix.com/{}/batch/employee/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+          }, 
+          {
+            "lang": "Shell", 
+            "source": ""
+          }
+        ], 
         "responses": {
           "200": {
             "description": "batch successfully posted", 

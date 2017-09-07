@@ -395,7 +395,7 @@
                       "classification": "", 
                       "is_active": true, 
                       "user_role": "FOREMAN", 
-                      "trade": null, 
+                      "trade": "", 
                       "phone": "9876543211", 
                       "email": "johnj@company.com"
                     }, 
@@ -409,7 +409,7 @@
                           "classification": "", 
                           "is_active": true, 
                           "user_role": "FOREMAN", 
-                          "trade": null, 
+                          "trade": "", 
                           "phone": "9876543211", 
                           "email": "johnj@company.com"
                         }, 
@@ -478,7 +478,7 @@
                       "classification": "", 
                       "is_active": true, 
                       "user_role": "FOREMAN", 
-                      "trade": null, 
+                      "trade": "", 
                       "phone": "9876543211", 
                       "email": "johnj@company.com"
                     }, 
@@ -492,7 +492,7 @@
                           "classification": "", 
                           "is_active": true, 
                           "user_role": "FOREMAN", 
-                          "trade": null, 
+                          "trade": "", 
                           "phone": "9876543211", 
                           "email": "johnj@company.com"
                         }, 

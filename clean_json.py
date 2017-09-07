@@ -22,7 +22,7 @@ def main(args):
     pargs = parser.parse_args(args)
     jdata = json.load(pargs.infile)
     cdata = clean_data(jdata, pargs.regex)
-    pargs.outfile.write(json.dumps(cdata))
+    json.dump(cdata, pargs.outfile, indent=2)
 
 def clean_data(data, regex):
     """Given `data`, clean it."""

@@ -80,11 +80,11 @@
         "x-code-samples": [
           {
             "lang": "Shell", 
-            "source": "curl -H \"Content-Type: application/json\" -H \"x-api-key: foobarbazbuz\" -X POST \\\n-d '[{\"company_supplied_id\": \"alexa\", \"user_role\": \"WORKER\", \"first_name\": \"Alex\", \"last_name\": \"Alexander\"}]' \\\nhttps://foo-bar.rhumbix.com/greatco/batch/employee/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '[{\"company_supplied_id\": \"alexa\", \"user_role\": \"WORKER\", \\\n\"first_name\": \"Alex\", \"last_name\": \"Alexander\"}]' \\\nhttps://async-api.rhumbix.com/greatco/batch/employee/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
           }, 
           {
             "lang": "Python", 
-            "source": "import requests\ndata = [\n    {\n        'company_supplied_id': 'alexa', \n        'user_role': 'WORKER', \n        'first_name': 'Alex', \n        'last_name': 'Alexander'\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://foo-bar.rhumbix.com/{}/batch/employee/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+            "source": "import requests\ndata = [\n    {\n        'company_supplied_id': 'alexa', \n        'user_role': 'WORKER', \n        'first_name': 'Alex', \n        'last_name': 'Alexander'\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.rhumbix.com/{}/batch'\\\n    '/employee/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
           }
         ], 
         "responses": {

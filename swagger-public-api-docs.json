@@ -80,11 +80,11 @@
         "x-code-samples": [
           {
             "lang": "Shell", 
-            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '[{\"company_supplied_id\": \"alexa\", \"user_role\": \"WORKER\", \\\n\"first_name\": \"Alex\", \"last_name\": \"Alexander\"}]' \\\nhttps://async-api.rhumbix.com/greatco/batch/employee/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '[{\"job_number\": \"7468652064756465\", \"name\": \"Hollywood Star \\\nLanes\",\"description\": \"\",\"address\": \"5227 Santa Monica \\\nBoulevard, Los Angeles, CA 90029\",\"cost_codes\": [{\"code\": \\\n\"18-10048\",\"description\": \"Plumbing\",\"units\": \"feet\"},\\\n{\"code\": \"18-10012\",\"description\": \"Heating\",\"units\": \"\"}]},\\\n{\"job_number\": \"73617665666572726973\",\"name\": \"Chez Quis\",\\\n\"description\": \"High End Restaurant where Abe Froman Eats.\",\\\n\"address\": \"22 W Schiller St, Chicago, IL 60610\",\"cost_codes\": []}]' \\\nhttps://async-api.rhumbix.com/greatco/batch/employee/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
           }, 
           {
             "lang": "Python", 
-            "source": "import requests\ndata = [\n    {\n        'company_supplied_id': 'alexa', \n        'user_role': 'WORKER', \n        'first_name': 'Alex', \n        'last_name': 'Alexander'\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.rhumbix.com/{}/batch'\\\n    '/employee/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+            "source": "import requests\ndata = [\n    {\n        'job_number': '7468652064756465', \n        'name': 'Hollywood Star Lanes',\n        'description': '',\n        'address': '5227 Santa Monica Boulevard, Los Angeles, CA 90029',\n        'cost_codes': [\n            {\n                'code': '18-10048',\n                'description': 'Plumbing',\n                'units': 'feet'\n            },\n            {\n                'code': '18-10012',\n                'description': 'Heating',\n                'units': ''\n            }\n        ]\n    },\n    {\n        'job_number': '73617665666572726973',\n        'name': 'Chez Quis',\n        'description': 'High End Restaurant where Abe Froman Eats.',\n        'address': '22 W Schiller St, Chicago, IL 60610',\n        'cost_codes': []\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.rhumbix.com/{}/batch'\\\n      '/employee/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
           }
         ], 
         "responses": {
@@ -211,6 +211,16 @@
           }
         ], 
         "operationId": "batchProjectImport", 
+        "x-code-samples": [
+          {
+            "lang": "Shell", 
+            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '[{\"company_supplied_id\": \"alexa\", \"user_role\": \"WORKER\", \\\n\"first_name\": \"Alex\", \"last_name\": \"Alexander\"}]' \\\nhttps://async-api.rhumbix.com/greatco/batch/project/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+          }, 
+          {
+            "lang": "Python", 
+            "source": "import requests\ndata = [\n    {\n        'company_supplied_id': 'alexa', \n        'user_role': 'WORKER', \n        'first_name': 'Alex', \n        'last_name': 'Alexander'\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.rhumbix.com/{}/batch'\\\n    '/project/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+          }
+        ], 
         "responses": {
           "200": {
             "description": "batch successfully posted", 

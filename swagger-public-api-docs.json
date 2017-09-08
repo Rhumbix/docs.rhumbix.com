@@ -985,7 +985,7 @@
       "in": "header"
     }
   }, 
-  "host": "api-dev.test-0-us-west-2.rhumbix.com", 
+  "host": "async-api.rhumbix.com", 
   "definitions": {
     "BatchKey": {
       "type": "string", 

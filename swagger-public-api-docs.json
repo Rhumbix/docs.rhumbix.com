@@ -1050,7 +1050,8 @@
         "user_role": {
           "enum": [
             "ADMIN", 
-            "FOREMAN", 
+            "FOREMAN",
+            "OFFICE_STAFF",
             "PM", 
             "WORKER"
           ], 

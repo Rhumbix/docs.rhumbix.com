@@ -1,5 +1,25 @@
 #!/bin/bash
 
+# COLORS!
+BLACK='\033[0;30m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BROWN='\033[0;33m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+GRAY='\033[0;37m'
+DGRAY='\033[1;30m'
+LRED='\033[1;31m'
+LGREEN='\033[1;32m'
+YELLOW='\033[1;33m'
+LBLUE='\033[1;34m'
+LPURPLE='\033[1;35m'
+LCYAN='\033[1;36m'
+WHITE='\033[1;37m'
+NC='\033[0m' # No Color
+
 if [ "$1" == "-h" -o "$1" == "--help" -o "$1" == "man" ]; then
   echo "Remove sensitive data from a rendered swagger.json and deploy the updates to docs.rhumbix.com."
   echo "Either provide the path to the *RENDERED* json or this script will infer its location."
@@ -15,20 +35,48 @@ if [ "$1" ]; then
   SWAGGER_PATH=$1
 fi
 
+THIS_VERSION=$(eval "$THISDIR/search_json.py \"$SWAGGER_PATH\" \"info.version\"")
+THIS_HOST=$(eval "$THISDIR/search_json.py \"$SWAGGER_PATH\" host")
+if [[ $THIS_HOST == *"async-api.dev.rhumbix.com"* ]]; then
+    THIS_ENV="dev"
+elif [[ $THIS_HOST == *"async-api.rc.rhumbix.com"* ]]; then
+    THIS_ENV="rc"
+elif [[ $THIS_HOST == *"async-api.rhumbix.com"* ]]; then
+    if [[ -z $THIS_VERSION ]]; then
+        echo 'Could not find api version in rendered swagger info.version key. $THIS_VERSION'
+        exit 1
+    else
+        THIS_ENV="$THIS_VERSION"
+    fi
+else
+    echo "Could not find matching criteria for dev, rc, or prod in rendered swagger 'host' key."
+    echo "Expected some form of async-api.*rhumbix.com"
+    exit 1
+fi
+
 FNAME="swagger-public-api-docs.json"
-OUTFILE="$THISDIR/$FNAME"
+OUTDIR="$THISDIR/$THIS_ENV"
+OUTFILE="$OUTDIR/$FNAME"
+
+if [ ! -d "$OUTDIR" ]; then
+    export PS1="${ORANGE}"
+    echo -e "${RED}* $OUTDIR does not exist. Creating it.${NC}"
+    mkdir -p "$OUTDIR"
+fi
 
 CMD="$THISDIR/clean_json.py $SWAGGER_PATH -r \"^x-amazon.?\" -o $OUTFILE"
 if eval $CMD ; then
-    echo "* New swagger cleaned and ready: $OUTFILE."
+    echo -e "${GREEN}* New swagger cleaned and ready for $THIS_ENV: $OUTFILE.${NC}"
 else
     exit 1
 fi
 
-GITCMD="cd $THISDIR; git add index.html $FNAME; git commit -m 'updated docs'; git push origin master"
-echo "* Checking Github... *"
-if eval $GITCMD ; then
-    echo "** Done: docs.rhumbix.com **"
-else
-    exit 1
-fi
+git status
+
+# GITCMD="cd $THISDIR; git add index.html $FNAME; git commit -m 'updated docs'; git push origin master"
+# echo "* Checking Github... *"
+# if eval $GITCMD ; then
+#     echo "** Done: docs.rhumbix.com **"
+# else
+#     exit 1
+# fi

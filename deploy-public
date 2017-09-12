@@ -70,6 +70,7 @@ else
     exit 1
 fi
 
+### RENDER HTML !!! ###
 read -d '' INDEX_HTML_TEMPLATE << EOF
 <!DOCTYPE html>
 <html>
@@ -95,6 +96,7 @@ read -d '' INDEX_HTML_TEMPLATE << EOF
   </body>
 </html>
 EOF
+### END OF RENDERING HTML ###
 
 if echo $INDEX_HTML_TEMPLATE > "$OUTDIR/index.html"; then
     echo -e "${GREEN}* New index rendered for $THIS_ENV: $OUTDIR/index.html${NC}"
@@ -113,11 +115,3 @@ if [ $IS_PROD == true ]; then
 fi
 
 git status
-
-# GITCMD="cd $THISDIR; git add index.html $FNAME; git commit -m 'updated docs'; git push origin master"
-# echo "* Checking Github... *"
-# if eval $GITCMD ; then
-#     echo "** Done: docs.rhumbix.com **"
-# else
-#     exit 1
-# fi

@@ -10,13 +10,6 @@ BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 GRAY='\033[0;37m'
-DGRAY='\033[1;30m'
-LRED='\033[1;31m'
-LGREEN='\033[1;32m'
-YELLOW='\033[1;33m'
-LBLUE='\033[1;34m'
-LPURPLE='\033[1;35m'
-LCYAN='\033[1;36m'
 WHITE='\033[1;37m'
 NC='\033[0m' # No Color
 
@@ -27,12 +20,18 @@ if [ "$1" == "-h" -o "$1" == "--help" -o "$1" == "man" ]; then
   exit 0
 fi
 
+IS_PROD=false
 THISDIR=$( cd $(dirname $0) ; pwd )
 
 UPDIR=$( cd .. ; pwd )
 SWAGGER_PATH="$UPDIR/rmbx_django/public-api/.swagger-public-api.rendered.json"
 if [ "$1" ]; then
   SWAGGER_PATH=$1
+fi
+
+if [ ! -f "$SWAGGER_PATH" ]; then
+    echo -e "${RED}* $SWAGGER_PATH does not exist. Cannot clean swagger for docs.rhumbix.com. Exiting.${NC}"
+    exit 1
 fi
 
 THIS_VERSION=$(eval "$THISDIR/search_json.py \"$SWAGGER_PATH\" \"info.version\"")
@@ -46,6 +45,7 @@ elif [[ $THIS_HOST == *"async-api.rhumbix.com"* ]]; then
         echo 'Could not find api version in rendered swagger info.version key. $THIS_VERSION'
         exit 1
     else
+        IS_PROD=true
         THIS_ENV="$THIS_VERSION"
     fi
 else
@@ -59,7 +59,6 @@ OUTDIR="$THISDIR/$THIS_ENV"
 OUTFILE="$OUTDIR/$FNAME"
 
 if [ ! -d "$OUTDIR" ]; then
-    export PS1="${ORANGE}"
     echo -e "${RED}* $OUTDIR does not exist. Creating it.${NC}"
     mkdir -p "$OUTDIR"
 fi
@@ -68,6 +67,38 @@ CMD="$THISDIR/clean_json.py $SWAGGER_PATH -r \"^x-amazon.?\" -o $OUTFILE"
 if eval $CMD ; then
     echo -e "${GREEN}* New swagger cleaned and ready for $THIS_ENV: $OUTFILE.${NC}"
 else
+    exit 1
+fi
+
+read -d '' INDEX_HTML_TEMPLATE << EOF
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rhumbix Public API Docs</title>
+    <!-- needed for adaptive design -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--
+    ReDoc doesn't change outer page styles
+    -->
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <redoc spec-url='https://raw.githubusercontent.com/Rhumbix/docs.rhumbix.com/master/$THIS_ENV/swagger-public-api-docs.json'></redoc>
+    <script src="https://rebilly.github.io/ReDoc/releases/v1.18.1/redoc.min.js"> </script>
+  </body>
+EOF
+
+if echo $INDEX_HTML_TEMPLATE >> "$OUTDIR/index.html"; then
+    echo -e "${GREEN}* New index rendered for $THIS_ENV: $OUTDIR/index.html${NC}"
+else
+    echo -e "Could not print index html template to $OUTDIR/index.html"
     exit 1
 fi
 

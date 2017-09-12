@@ -98,7 +98,7 @@ read -d '' INDEX_HTML_TEMPLATE << EOF
 EOF
 ### END OF RENDERING HTML ###
 
-if echo $INDEX_HTML_TEMPLATE > "$OUTDIR/index.html"; then
+if echo "$INDEX_HTML_TEMPLATE" > "$OUTDIR/index.html"; then
     echo -e "${GREEN}* New index rendered for $THIS_ENV: $OUTDIR/index.html${NC}"
 else
     echo -e "Could not print index html template to $OUTDIR/index.html"
@@ -106,7 +106,7 @@ else
 fi
 
 if [ $IS_PROD == true ]; then
-    if echo $INDEX_HTML_TEMPLATE > "$THISDIR/index.html"; then
+    if echo "$INDEX_HTML_TEMPLATE" > "$THISDIR/index.html"; then
         echo -e "${BLUE}*! Bonus index rendered for prod: $THISDIR/index.html${NC}"
     else
         echo -e "Could not print index html template to $THISDIR/index.html"

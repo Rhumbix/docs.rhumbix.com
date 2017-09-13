@@ -59,6 +59,7 @@ fi
 
 FNAME="swagger-public-api-docs.json"
 ENVDIR="$THISDIR/$THIS_ENV"
+ENV_VER_DIR="$THIS_ENV/$THIS_VERSION" # dev/1.0.1 for example
 VERSIONDIR="$ENVDIR/$THIS_VERSION"
 OUTFILE="$VERSIONDIR/$FNAME"
 
@@ -95,7 +96,7 @@ read -d '' INDEX_HTML_TEMPLATE << EOF
     </style>
   </head>
   <body>
-    <redoc spec-url='https://raw.githubusercontent.com/Rhumbix/docs.rhumbix.com/master/$THIS_ENV/swagger-public-api-docs.json'></redoc>
+    <redoc spec-url='https://raw.githubusercontent.com/Rhumbix/docs.rhumbix.com/master/$ENV_VER_DIR/swagger-public-api-docs.json'></redoc>
     <script src="https://rebilly.github.io/ReDoc/releases/v1.18.1/redoc.min.js"> </script>
   </body>
 </html>

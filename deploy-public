@@ -117,7 +117,7 @@ else
     MAIN_INDEX_DIR=$ENVDIR
 fi
 if echo "$INDEX_HTML_TEMPLATE" > "$MAIN_INDEX_DIR/index.html"; then
-    echo -e "${BLUE}*! Bonus index rendered for prod: $MAIN_INDEX_DIR/index.html${NC}"
+    echo -e "${GREEN}* Index also rendered in main: $MAIN_INDEX_DIR/index.html${NC}"
 else
     echo -e "Could not print index html template to $MAIN_INDEX_DIR/index.html"
     exit 1

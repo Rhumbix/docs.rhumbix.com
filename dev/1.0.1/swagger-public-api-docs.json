@@ -1052,7 +1052,8 @@
             "ADMIN", 
             "FOREMAN", 
             "PM", 
-            "WORKER"
+            "WORKER", 
+            "OFFICE_STAFF"
           ], 
           "type": "string"
         }, 

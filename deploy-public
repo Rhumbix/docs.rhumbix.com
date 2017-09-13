@@ -40,13 +40,16 @@ if [[ $THIS_HOST == *"async-api.dev.rhumbix.com"* ]]; then
     THIS_ENV="dev"
 elif [[ $THIS_HOST == *"async-api.rc.rhumbix.com"* ]]; then
     THIS_ENV="rc"
+elif [[ $THIS_HOST == *"async-api.hf.rhumbix.com"* ]]; then
+    THIS_ENV="hf"
 elif [[ $THIS_HOST == *"async-api.rhumbix.com"* ]]; then
     if [[ -z $THIS_VERSION ]]; then
         echo 'Could not find api version in rendered swagger info.version key. $THIS_VERSION'
         exit 1
     else
+        # calling this "version" instead of "prod" because docs.rhumbix.com/version is better
         IS_PROD=true
-        THIS_ENV="$THIS_VERSION"
+        THIS_ENV="version"
     fi
 else
     echo "Could not find matching criteria for dev, rc, or prod in rendered swagger 'host' key."
@@ -55,12 +58,13 @@ else
 fi
 
 FNAME="swagger-public-api-docs.json"
-OUTDIR="$THISDIR/$THIS_ENV"
-OUTFILE="$OUTDIR/$FNAME"
+ENVDIR="$THISDIR/$THIS_ENV"
+VERSIONDIR="$ENVDIR/$THIS_VERSION"
+OUTFILE="$VERSIONDIR/$FNAME"
 
-if [ ! -d "$OUTDIR" ]; then
-    echo -e "${RED}* $OUTDIR does not exist. Creating it.${NC}"
-    mkdir -p "$OUTDIR"
+if [ ! -d "$VERSIONDIR" ]; then
+    echo -e "${RED}* $VERSIONDIR does not exist. Creating it.${NC}"
+    mkdir -p "$VERSIONDIR"
 fi
 
 CMD="$THISDIR/clean_json.py $SWAGGER_PATH -r \"^x-amazon.?\" -o $OUTFILE"
@@ -98,20 +102,25 @@ read -d '' INDEX_HTML_TEMPLATE << EOF
 EOF
 ### END OF RENDERING HTML ###
 
-if echo "$INDEX_HTML_TEMPLATE" > "$OUTDIR/index.html"; then
-    echo -e "${GREEN}* New index rendered for $THIS_ENV: $OUTDIR/index.html${NC}"
+# Render index.html for the specific version
+if echo "$INDEX_HTML_TEMPLATE" > "$VERSIONDIR/index.html"; then
+    echo -e "${GREEN}* New index rendered for $THIS_ENV: $VERSIONDIR/index.html${NC}"
 else
-    echo -e "Could not print index html template to $OUTDIR/index.html"
+    echo -e "Could not print index html template to $VERSIONDIR/index.html"
     exit 1
 fi
 
+# render index.html for main dir
 if [ $IS_PROD == true ]; then
-    if echo "$INDEX_HTML_TEMPLATE" > "$THISDIR/index.html"; then
-        echo -e "${BLUE}*! Bonus index rendered for prod: $THISDIR/index.html${NC}"
-    else
-        echo -e "Could not print index html template to $THISDIR/index.html"
-        exit 1
-    fi
+    MAIN_INDEX_DIR=$THISDIR
+else
+    MAIN_INDEX_DIR=$ENVDIR
+fi
+if echo "$INDEX_HTML_TEMPLATE" > "$MAIN_INDEX_DIR/index.html"; then
+    echo -e "${BLUE}*! Bonus index rendered for prod: $MAIN_INDEX_DIR/index.html${NC}"
+else
+    echo -e "Could not print index html template to $MAIN_INDEX_DIR/index.html"
+    exit 1
 fi
 
 git status

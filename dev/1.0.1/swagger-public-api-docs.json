@@ -1,7 +1,7 @@
 {
   "info": {
     "version": "1.0.1", 
-    "description": "The Rhumbix API is intended for use by Rhumbix customers and partners to build integrations with the Rhumbix application. The API is designed to support regular updates and queries in batch requests. Rhumbix primarily manages data for construction workers in the field. Integrations should be aware that updates to this data will directly influence the users of the mobile and web application. For access to the API, contact your Rhumbix support representitive. Further application documentation and support can be found at https://rhumbix.desk.com/ \n## Overview\nThe usual order of operation is like this: \n1) You post data to the API with your unique company_key and x-api-key. \n2) The request is put into a queue of requests (sometimes requests are very large) and you receive back a batch_key to check the status of your request. \n3) You check the unique URL of your request using your new batch_key, your company_key and x-api-key until its status is COMPLETE. \n# Authentication\nAuthentication is handled via a token system and a unique company_key. You can create a company_key and retrieve an api token key by logging in to the Rhumbix web platform. Once you have an access token, you can interact with the API by including the `x-api-key` in the header of an HTTP `GET` or `POST` request.\n```json\n{\n  \"x-api-key\": \"abcdefghijklmnopqrstuvwxyz0123456789\" \n}\n```", 
+    "description": "The Rhumbix API is intended for use by Rhumbix customers and partners to build integrations with the Rhumbix application. The API is designed to support regular updates and queries in batch requests. Rhumbix primarily manages data for construction workers in the field. Integrations should be aware that updates to this data will directly influence the users of the mobile and web application. For access to the API, contact your Rhumbix support representitive. Further application documentation and support can be found at https://rhumbix.desk.com/ \n## Overview\nThe usual order of operation is like this: \n1) You post data to the API with your unique company_key and x-api-key. \n2) The request is put into a queue of requests (sometimes requests are very large) and you receive back a batch_key to check the status of your request. \n3) You check the unique URL of your request using your new batch_key, your company_key and x-api-key until its status is COMPLETE. \n### Base URL \nhttps://async-api.dev.rhumbix.com/V1_0_1\n# Authentication\nAuthentication is handled via a token system and a unique company_key. You can create a company_key and retrieve an api token key by logging in to the Rhumbix web platform. Once you have an access token, you can interact with the API by including the `x-api-key` in the header of an HTTP `GET` or `POST` request.\n```json\n{\n  \"x-api-key\": \"abcdefghijklmnopqrstuvwxyz0123456789\" \n}\n```", 
     "x-logo": {
       "url": "https://s3.amazonaws.com/rmbx-export-assets/rmbx_horizontal_logo_colored.png"
     }, 
@@ -80,11 +80,11 @@
         "x-code-samples": [
           {
             "lang": "Shell", 
-            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '[{\"company_supplied_id\": \"alexa\", \"user_role\": \"WORKER\", \\\n\"first_name\": \"Alex\", \"last_name\": \"Alexander\"}]' \\\nhttps://async-api.rhumbix.com/greatco/batch/project/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '[{\"company_supplied_id\": \"alexa\", \"user_role\": \"WORKER\", \\\n\"first_name\": \"Alex\", \"last_name\": \"Alexander\"}]' \\\nhttps://async-api.dev.rhumbix.com/V1_0_1/greatco/batch/employee/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
           }, 
           {
             "lang": "Python", 
-            "source": "import requests\ndata = [\n    {\n        'company_supplied_id': 'alexa', \n        'user_role': 'WORKER', \n        'first_name': 'Alex', \n        'last_name': 'Alexander'\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.rhumbix.com/{}/batch'\\\n    '/project/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+            "source": "import requests\ndata = [\n    {\n        'company_supplied_id': 'alexa', \n        'user_role': 'WORKER', \n        'first_name': 'Alex', \n        'last_name': 'Alexander'\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.dev.rhumbix.com/V1_0_1/{}'\\\n      '/batch/employee/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
           }
         ], 
         "responses": {
@@ -214,11 +214,11 @@
         "x-code-samples": [
           {
             "lang": "Shell", 
-            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '[{\"job_number\": \"7468652064756465\", \"name\": \"Hollywood Star \\\nLanes\",\"description\": \"\",\"address\": \"5227 Santa Monica \\\nBoulevard, Los Angeles, CA 90029\",\"cost_codes\": [{\"code\": \\\n\"18-10048\",\"description\": \"Plumbing\",\"units\": \"feet\"},\\\n{\"code\": \"18-10012\",\"description\": \"Heating\",\"units\": \"\"}]},\\\n{\"job_number\": \"73617665666572726973\",\"name\": \"Chez Quis\",\\\n\"description\": \"High End Restaurant where Abe Froman Eats.\",\\\n\"address\": \"22 W Schiller St, Chicago, IL 60610\",\"cost_codes\": []}]' \\\nhttps://async-api.rhumbix.com/greatco/batch/employee/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '[{\"job_number\": \"7468652064756465\", \"name\": \"Hollywood Star \\\nLanes\",\"description\": \"\",\"address\": \"5227 Santa Monica \\\nBoulevard, Los Angeles, CA 90029\",\"cost_codes\": [{\"code\": \\\n\"18-10048\",\"description\": \"Plumbing\",\"units\": \"feet\"},\\\n{\"code\": \"18-10012\",\"description\": \"Heating\",\"units\": \"\"}]},\\\n{\"job_number\": \"73617665666572726973\",\"name\": \"Chez Quis\",\\\n\"description\": \"High End Restaurant where Abe Froman Eats.\",\\\n\"address\": \"22 W Schiller St, Chicago, IL 60610\",\"cost_codes\": []}]' \\\nhttps://async-api.dev.rhumbix.com/V1_0_1/greatco/batch/project/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
           }, 
           {
             "lang": "Python", 
-            "source": "import requests\ndata = [\n    {\n        'job_number': '7468652064756465', \n        'name': 'Hollywood Star Lanes',\n        'description': '',\n        'address': '5227 Santa Monica Boulevard, Los Angeles, CA 90029',\n        'cost_codes': [\n            {\n                'code': '18-10048',\n                'description': 'Plumbing',\n                'units': 'feet'\n            },\n            {\n                'code': '18-10012',\n                'description': 'Heating',\n                'units': ''\n            }\n        ]\n    },\n    {\n        'job_number': '73617665666572726973',\n        'name': 'Chez Quis',\n        'description': 'High End Restaurant where Abe Froman Eats.',\n        'address': '22 W Schiller St, Chicago, IL 60610',\n        'cost_codes': []\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.rhumbix.com/{}/batch'\\\n      '/employee/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+            "source": "import requests\ndata = [\n    {\n        'job_number': '7468652064756465', \n        'name': 'Hollywood Star Lanes',\n        'description': '',\n        'address': '5227 Santa Monica Boulevard, Los Angeles, CA 90029',\n        'cost_codes': [\n            {\n                'code': '18-10048',\n                'description': 'Plumbing',\n                'units': 'feet'\n            },\n            {\n                'code': '18-10012',\n                'description': 'Heating',\n                'units': ''\n            }\n        ]\n    },\n    {\n        'job_number': '73617665666572726973',\n        'name': 'Chez Quis',\n        'description': 'High End Restaurant where Abe Froman Eats.',\n        'address': '22 W Schiller St, Chicago, IL 60610',\n        'cost_codes': []\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.dev.rhumbix.com/V1_0_1/{}'\\\n      '/batch/project/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
           }
         ], 
         "responses": {
@@ -970,6 +970,12 @@
   ], 
   "produces": [
     "application/json"
+  ], 
+  "x-servers": [
+    {
+      "url": "//async-api.dev.rhumbix.com/V1_0_1", 
+      "description": "Server URL"
+    }
   ], 
   "securityDefinitions": {
     "api_key": {

@@ -1105,7 +1105,8 @@
     }, 
     "Project": {
       "required": [
-        "job_number"
+        "job_number", 
+        "name"
       ], 
       "type": "object", 
       "properties": {
@@ -1115,7 +1116,8 @@
         "cost_codes": {
           "items": {
             "required": [
-              "code"
+              "code", 
+              "description"
             ], 
             "type": "object", 
             "properties": {

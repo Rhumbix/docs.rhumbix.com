@@ -1105,7 +1105,8 @@
     }, 
     "Project": {
       "required": [
-        "job_number"
+        "job_number", 
+        "name"
       ], 
       "type": "object", 
       "properties": {

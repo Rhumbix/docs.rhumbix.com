@@ -1116,7 +1116,8 @@
         "cost_codes": {
           "items": {
             "required": [
-              "code"
+              "code", 
+              "description"
             ], 
             "type": "object", 
             "properties": {

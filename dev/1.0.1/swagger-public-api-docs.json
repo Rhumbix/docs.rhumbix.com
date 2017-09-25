@@ -235,7 +235,7 @@
         "tags": [
           "Batch Export"
         ], 
-        "summary": "Batch Status", 
+        "summary": "Workshift Batch Status", 
         "security": [
           {
             "RMBXApiAuthorizer": []
@@ -463,7 +463,7 @@
         "tags": [
           "Batch Export"
         ], 
-        "summary": "Batch Results", 
+        "summary": "Workshift Batch Results", 
         "security": [
           {
             "RMBXApiAuthorizer": []
@@ -519,7 +519,7 @@
         "tags": [
           "Batch Export"
         ], 
-        "summary": "Export Request", 
+        "summary": "Workshift Export Request", 
         "security": [
           {
             "RMBXApiAuthorizer": []

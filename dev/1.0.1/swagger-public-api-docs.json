@@ -532,7 +532,7 @@
         "x-code-samples": [
           {
             "lang": "Shell", 
-            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d ''{\"start_time\": \"2014-01-01\", \"end_time\": \"2014-01-07\", \\\n\"bad_query_term\": \"a query filter parameter that will be ignored\"}' \\\nhttps://async-api.dev.rhumbix.com/V1_0_1/greatco/batch/workshift/export\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '{\"start_time\": \"2014-01-01\", \"end_time\": \"2014-01-07\", \\\n\"bad_query_term\": \"a query filter parameter that will be ignored\"}' \\\nhttps://async-api.dev.rhumbix.com/V1_0_1/greatco/batch/workshift/export\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
           }, 
           {
             "lang": "Python", 

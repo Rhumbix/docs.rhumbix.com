@@ -10,7 +10,7 @@
   "paths": {
     "/{company_key}/batch/employee/import": {
       "post": {
-        "description": "Returns a new batch_key for subsequently retrieving status updates for this batch.", 
+        "description": "Post a new batch of employee data for import into Rhumbix. Returns a new batch_key for subsequently retrieving status updates for this batch.", 
         "parameters": [
           {
             "description": "The unique company key associated with your api key.", 
@@ -67,7 +67,7 @@
         "tags": [
           "Batch Import"
         ], 
-        "summary": "Post a new batch of employee data for import into Rhumbix.", 
+        "summary": "Employee Batch Data", 
         "security": [
           {
             "RMBXApiAuthorizer": []
@@ -235,7 +235,7 @@
         "tags": [
           "Batch Export"
         ], 
-        "summary": "Retrieve the processing status of a workshift export batch.", 
+        "summary": "Batch Status", 
         "security": [
           {
             "RMBXApiAuthorizer": []
@@ -463,7 +463,7 @@
         "tags": [
           "Batch Export"
         ], 
-        "summary": "Retrieve the results of a completed workshift export batch.", 
+        "summary": "Batch Results", 
         "security": [
           {
             "RMBXApiAuthorizer": []
@@ -519,7 +519,7 @@
         "tags": [
           "Batch Export"
         ], 
-        "summary": "Post a new request to export workshift data asynchronously from Rhumbix.", 
+        "summary": "Export Request", 
         "security": [
           {
             "RMBXApiAuthorizer": []
@@ -658,7 +658,7 @@
         "tags": [
           "Batch Import"
         ], 
-        "summary": "Post a new batch of project data to import into Rhumbix.", 
+        "summary": "Project Batch Data", 
         "security": [
           {
             "RMBXApiAuthorizer": []
@@ -859,7 +859,7 @@
         "tags": [
           "Batch Import"
         ], 
-        "summary": "Retrieve the processing status of a employee import batch.", 
+        "summary": "Employee Import Status", 
         "security": [
           {
             "RMBXApiAuthorizer": []
@@ -989,7 +989,7 @@
         "tags": [
           "Batch Import"
         ], 
-        "summary": "Retrieve the processing status of a project import batch.", 
+        "summary": "Project Import Status", 
         "security": [
           {
             "RMBXApiAuthorizer": []

@@ -89,6 +89,11 @@
         ], 
         "responses": {
           "200": {
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }, 
             "description": "batch successfully posted", 
             "schema": {
               "title": "BatchEmployeeImportResponse", 
@@ -135,110 +140,7 @@
         "operationId": "batchEmployeeImportOptions"
       }
     }, 
-    "/{company_key}/batch/project/import": {
-      "post": {
-        "description": "Post a new batch of project data to import into Rhumbix. Returns the new batch_key for subsequently retrieving status updates for this batch.", 
-        "parameters": [
-          {
-            "description": "The unique company key associated with your api key.", 
-            "required": true, 
-            "type": "string", 
-            "name": "company_key", 
-            "in": "path"
-          }, 
-          {
-            "description": "An object that contains project data that you would like to import into Rhumbix.", 
-            "required": true, 
-            "in": "body", 
-            "name": "batch_request", 
-            "schema": {
-              "items": {
-                "$ref": "#/definitions/Project"
-              }, 
-              "type": "array", 
-              "example": [
-                {
-                  "job_number": "7468652064756465", 
-                  "cost_codes": [
-                    {
-                      "units": "feet", 
-                      "code": "18-10048", 
-                      "description": "Plumbing"
-                    }, 
-                    {
-                      "units": "", 
-                      "code": "18-10012", 
-                      "description": "Heating"
-                    }
-                  ], 
-                  "description": "New Bowling Alley", 
-                  "name": "Hollywood Star Lanes", 
-                  "address": "5227 Santa Monica Boulevard, Los Angeles, CA 90029"
-                }, 
-                {
-                  "job_number": "73617665666572726973", 
-                  "cost_codes": [
-                    {
-                      "units": "", 
-                      "code": "HF-669", 
-                      "description": "Electrical Gear"
-                    }, 
-                    {
-                      "units": "meters", 
-                      "code": "HF-770", 
-                      "description": "Platform Conduit"
-                    }
-                  ], 
-                  "description": "High End Restaurant where Abe Froman Eats.", 
-                  "name": "Chez Quis", 
-                  "address": "22 W Schiller St, Chicago, IL 60610"
-                }
-              ], 
-              "title": "BatchProjectImportRequest"
-            }
-          }
-        ], 
-        "tags": [
-          "Batch Import"
-        ], 
-        "summary": "Post a new batch of project data to import into Rhumbix.", 
-        "security": [
-          {
-            "RMBXApiAuthorizer": []
-          }, 
-          {
-            "api_key": []
-          }
-        ], 
-        "operationId": "batchProjectImport", 
-        "x-code-samples": [
-          {
-            "lang": "Shell", 
-            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '[{\"job_number\": \"7468652064756465\", \"name\": \"Hollywood Star \\\nLanes\",\"description\": \"\",\"address\": \"5227 Santa Monica \\\nBoulevard, Los Angeles, CA 90029\",\"cost_codes\": [{\"code\": \\\n\"18-10048\",\"description\": \"Plumbing\",\"units\": \"feet\"},\\\n{\"code\": \"18-10012\",\"description\": \"Heating\",\"units\": \"\"}]},\\\n{\"job_number\": \"73617665666572726973\",\"name\": \"Chez Quis\",\\\n\"description\": \"High End Restaurant where Abe Froman Eats.\",\\\n\"address\": \"22 W Schiller St, Chicago, IL 60610\",\"cost_codes\": []}]' \\\nhttps://async-api.dev.rhumbix.com/V1_0_1/greatco/batch/project/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
-          }, 
-          {
-            "lang": "Python", 
-            "source": "import requests\ndata = [\n    {\n        'job_number': '7468652064756465', \n        'name': 'Hollywood Star Lanes',\n        'description': '',\n        'address': '5227 Santa Monica Boulevard, Los Angeles, CA 90029',\n        'cost_codes': [\n            {\n                'code': '18-10048',\n                'description': 'Plumbing',\n                'units': 'feet'\n            },\n            {\n                'code': '18-10012',\n                'description': 'Heating',\n                'units': ''\n            }\n        ]\n    },\n    {\n        'job_number': '73617665666572726973',\n        'name': 'Chez Quis',\n        'description': 'High End Restaurant where Abe Froman Eats.',\n        'address': '22 W Schiller St, Chicago, IL 60610',\n        'cost_codes': []\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.dev.rhumbix.com/V1_0_1/{}'\\\n      '/batch/project/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
-          }
-        ], 
-        "responses": {
-          "200": {
-            "description": "batch successfully posted", 
-            "schema": {
-              "title": "BatchProjectImportResponse", 
-              "type": "object", 
-              "example": {
-                "batch_key": "1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90"
-              }, 
-              "properties": {
-                "batch_key": {
-                  "$ref": "#/definitions/BatchKey"
-                }
-              }
-            }
-          }
-        }
-      }, 
+    "/{company_key}/batch/workshift/export/{batch_key}/status": {
       "options": {
         "responses": {
           "200": {
@@ -266,43 +168,74 @@
         "consumes": [
           "application/json"
         ], 
-        "operationId": "batchProjectImportOptions"
-      }
-    }, 
-    "/{company_key}/batch/workshift/export": {
-      "post": {
-        "description": "Post a new request to export workshift data asynchronously from Rhumbix.  Returns the new batch_key for subsequently retrieving status and results for this batch.", 
+        "operationId": "batchWorkshiftExportStatusOptions"
+      }, 
+      "get": {
+        "responses": {
+          "200": {
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }, 
+            "description": "batch is PENDING (in-process) or COMPLETE", 
+            "schema": {
+              "title": "BatchWorkshiftExportStatusResponse", 
+              "required": [
+                "status"
+              ], 
+              "type": "object", 
+              "example": {
+                "status": "PENDING"
+              }, 
+              "properties": {
+                "status": {
+                  "$ref": "#/definitions/BatchStatus"
+                }
+              }
+            }
+          }, 
+          "202": {
+            "description": "url does not exist yet but will when batch queues up", 
+            "schema": {
+              "title": "BatchWorkshiftExportStatusAcceptedResponse", 
+              "required": [
+                "status"
+              ], 
+              "type": "object", 
+              "example": {
+                "status": "ACCEPTED"
+              }, 
+              "properties": {
+                "status": {
+                  "$ref": "#/definitions/BatchStatus"
+                }
+              }
+            }
+          }
+        }, 
         "parameters": [
           {
-            "description": "The unique company key associated with your api key.", 
             "required": true, 
             "type": "string", 
             "name": "company_key", 
             "in": "path"
           }, 
           {
-            "description": "An array of of queries describing data you would like to export from Rhumbix.", 
             "required": true, 
-            "in": "body", 
-            "name": "batch_workshift_export_request", 
-            "schema": {
-              "items": {
-                "$ref": "#/definitions/WorkshiftQuery"
-              }, 
-              "type": "array", 
-              "example": {
-                "start_time": "2014-01-01", 
-                "bad_query_term": "a query filter paramater that will be ignored", 
-                "end_time": "2014-01-07"
-              }, 
-              "title": "BatchWorkshiftExportRequest"
-            }
+            "type": "string", 
+            "name": "batch_key", 
+            "in": "path"
           }
+        ], 
+        "produces": [
+          "application/json", 
+          "application/xml"
         ], 
         "tags": [
           "Batch Export"
         ], 
-        "summary": "Post a new request to export workshift data asynchronously from Rhumbix.", 
+        "summary": "Retrieve the processing status of a workshift export batch.", 
         "security": [
           {
             "RMBXApiAuthorizer": []
@@ -311,53 +244,18 @@
             "api_key": []
           }
         ], 
-        "operationId": "batchWorkshiftExport", 
-        "responses": {
-          "200": {
-            "description": "batch request received", 
-            "schema": {
-              "title": "BatchWorkshiftExportResponse", 
-              "type": "object", 
-              "example": {
-                "batch_key": "1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90"
-              }, 
-              "properties": {
-                "batch_key": {
-                  "$ref": "#/definitions/BatchKey"
-                }
-              }
-            }
+        "operationId": "batchWorkshiftExportStatus", 
+        "x-code-samples": [
+          {
+            "lang": "Shell", 
+            "source": "curl -X GET -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\nhttps://async-api.dev.rhumbix.com/V1_0_1/greatco/batch/workshift/export/1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90/status\n# {\"status\": \"PENDING\"}\nsleep 60\ncurl -X GET -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\nhttps://async-api.dev.rhumbix.com/V1_0_1/greatco/batch/workshift/export/1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90/status\n# {\"status\": \"COMPLETE\"}"
+          }, 
+          {
+            "lang": "Python", 
+            "source": "import requests, time\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nbatch_key = '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'\nurl = 'https://async-api.dev.rhumbix.com/V1_0_1/{0}'\\\n      '/batch/workshift/export/{1}/status'.format(\n          company_key, batch_key)\nresult = requests.get(url, headers=headers)\nprint result.json() \n# {'status': 'PENDING'}\ntime.sleep(60)\nresult = requests.get(url, headers=headers)\nprint result.json() \n# {'status': 'COMPLETE'}"
           }
-        }
-      }, 
-      "options": {
-        "responses": {
-          "200": {
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }, 
-              "Access-Control-Allow-Methods": {
-                "type": "string"
-              }, 
-              "Access-Control-Allow-Headers": {
-                "type": "string"
-              }
-            }, 
-            "description": "ok"
-          }
-        }, 
-        "produces": [
-          "application/json"
         ], 
-        "tags": [
-          "CORS"
-        ], 
-        "summary": "Returns appropriate headers to enable CORS for cross-domain API requests", 
-        "consumes": [
-          "application/json"
-        ], 
-        "operationId": "batchWorkshiftExportOptions"
+        "description": "Retrieve the processing status of a workshift export batch using the batch_key value that was returned when the batch was created.  After creating a new export batch, you should poll this endpoint to monitor the status as your batch is processed asynchronously.  When the returned status is \"Complete\", retrieve your exported data by calling the export results method."
       }
     }, 
     "/{company_key}/batch/workshift/export/{batch_key}/results": {
@@ -393,6 +291,11 @@
       "get": {
         "responses": {
           "200": {
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }, 
             "description": "batch complete", 
             "schema": {
               "items": {
@@ -570,10 +473,95 @@
           }
         ], 
         "operationId": "batchWorkshiftExportResults", 
+        "x-code-samples": [
+          {
+            "lang": "Shell", 
+            "source": "curl -X GET -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\nhttps://async-api.dev.rhumbix.com/V1_0_1/greatco/batch/workshift/export/1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90/results\n# {\"errors\": {\"bad_query_term\": [\"This is not an acceptable filter parameter.\"]}, \"workshifts\": [{\"work_shift_key\": \"D7bKqP5r\", \"foreman\": { \"<foreman details>\" }, \"start_time\": \"2017-01-03T22:38:33.885000Z\", \"timecard_entries\": [ \"<timecard entry details>\" ], \"end_time\": \"2017-01-04T01:11:58.160000Z\"}]}"
+          }, 
+          {
+            "lang": "Python", 
+            "source": "import requests, time\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nbatch_key = '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'\nurl = 'https://async-api.dev.rhumbix.com/V1_0_1/{0}'\\\n      '/batch/workshift/export/{1}/results'.format(\n          company_key, batch_key)\nresult = requests.get(url, headers=headers)\nprint result.json() \n# {\n  'errors': {\n    'bad_query_term': [\n      'This is not an acceptable filter parameter.'\n    ]\n  },\n  'workshifts': [\n    {\n      'end_time': '2017-01-04T01:11:58.160000Z',\n      'foreman': { '<foreman details>' },\n      'start_time': '2017-01-03T22:38:33.885000Z',\n      'timecard_entries': ['<timecard entry details>'],\n      'work_shift_key': 'D7bKqP5r'\n    }\n  ]\n}"
+          }
+        ], 
         "description": "Retrieve the results of a completed workshift export batch.  You should poll the export status for this batch until it returns a status of \"COMPLETE\" before trying to retrieve these results."
       }
     }, 
-    "/{company_key}/batch/workshift/export/{batch_key}/status": {
+    "/{company_key}/batch/workshift/export": {
+      "post": {
+        "description": "Post a new request to export workshift data asynchronously from Rhumbix.  Returns the new batch_key for subsequently retrieving status and results for this batch.", 
+        "parameters": [
+          {
+            "description": "The unique company key associated with your api key.", 
+            "required": true, 
+            "type": "string", 
+            "name": "company_key", 
+            "in": "path"
+          }, 
+          {
+            "description": "An array of of queries describing data you would like to export from Rhumbix.", 
+            "required": true, 
+            "in": "body", 
+            "name": "batch_workshift_export_request", 
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/WorkshiftQuery"
+              }, 
+              "type": "array", 
+              "example": {
+                "start_time": "2014-01-01", 
+                "bad_query_term": "a query filter parameter that will be ignored", 
+                "end_time": "2014-01-07"
+              }, 
+              "title": "BatchWorkshiftExportRequest"
+            }
+          }
+        ], 
+        "tags": [
+          "Batch Export"
+        ], 
+        "summary": "Post a new request to export workshift data asynchronously from Rhumbix.", 
+        "security": [
+          {
+            "RMBXApiAuthorizer": []
+          }, 
+          {
+            "api_key": []
+          }
+        ], 
+        "operationId": "batchWorkshiftExport", 
+        "x-code-samples": [
+          {
+            "lang": "Shell", 
+            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d ''{\"start_time\": \"2014-01-01\", \"end_time\": \"2014-01-07\", \\\n\"bad_query_term\": \"a query filter parameter that will be ignored\"}' \\\nhttps://async-api.dev.rhumbix.com/V1_0_1/greatco/batch/workshift/export\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+          }, 
+          {
+            "lang": "Python", 
+            "source": "import requests\ndata = [\n    {\n        'start_time': '2014-01-01', \n        'bad_query_term': 'a query filter parameter that will be ignored', \n        'end_time': '2014-01-07'\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.dev.rhumbix.com/V1_0_1/{}'\\\n      '/batch/workshift/export'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }, 
+            "description": "batch request received", 
+            "schema": {
+              "title": "BatchWorkshiftExportResponse", 
+              "type": "object", 
+              "example": {
+                "batch_key": "1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90"
+              }, 
+              "properties": {
+                "batch_key": {
+                  "$ref": "#/definitions/BatchKey"
+                }
+              }
+            }
+          }
+        }
+      }, 
       "options": {
         "responses": {
           "200": {
@@ -601,74 +589,76 @@
         "consumes": [
           "application/json"
         ], 
-        "operationId": "batchWorkshiftExportStatusOptions"
-      }, 
-      "get": {
-        "responses": {
-          "200": {
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }, 
-            "description": "batch is PENDING (in-process) or COMPLETE", 
-            "schema": {
-              "title": "BatchWorkshiftExportStatusResponse", 
-              "required": [
-                "status"
-              ], 
-              "type": "object", 
-              "example": {
-                "status": "PENDING"
-              }, 
-              "properties": {
-                "status": {
-                  "$ref": "#/definitions/BatchStatus"
-                }
-              }
-            }
-          }, 
-          "202": {
-            "description": "url does not exist yet but will when batch queues up", 
-            "schema": {
-              "title": "BatchWorkshiftExportStatusAcceptedResponse", 
-              "required": [
-                "status"
-              ], 
-              "type": "object", 
-              "example": {
-                "status": "ACCEPTED"
-              }, 
-              "properties": {
-                "status": {
-                  "$ref": "#/definitions/BatchStatus"
-                }
-              }
-            }
-          }
-        }, 
+        "operationId": "batchWorkshiftExportOptions"
+      }
+    }, 
+    "/{company_key}/batch/project/import": {
+      "post": {
+        "description": "Post a new batch of project data to import into Rhumbix. Returns the new batch_key for subsequently retrieving status updates for this batch.", 
         "parameters": [
           {
+            "description": "The unique company key associated with your api key.", 
             "required": true, 
             "type": "string", 
             "name": "company_key", 
             "in": "path"
           }, 
           {
+            "description": "An object that contains project data that you would like to import into Rhumbix.", 
             "required": true, 
-            "type": "string", 
-            "name": "batch_key", 
-            "in": "path"
+            "in": "body", 
+            "name": "batch_request", 
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Project"
+              }, 
+              "type": "array", 
+              "example": [
+                {
+                  "job_number": "7468652064756465", 
+                  "cost_codes": [
+                    {
+                      "units": "feet", 
+                      "code": "18-10048", 
+                      "description": "Plumbing"
+                    }, 
+                    {
+                      "units": "", 
+                      "code": "18-10012", 
+                      "description": "Heating"
+                    }
+                  ], 
+                  "description": "New Bowling Alley", 
+                  "name": "Hollywood Star Lanes", 
+                  "address": "5227 Santa Monica Boulevard, Los Angeles, CA 90029"
+                }, 
+                {
+                  "job_number": "73617665666572726973", 
+                  "cost_codes": [
+                    {
+                      "units": "", 
+                      "code": "HF-669", 
+                      "description": "Electrical Gear"
+                    }, 
+                    {
+                      "units": "meters", 
+                      "code": "HF-770", 
+                      "description": "Platform Conduit"
+                    }
+                  ], 
+                  "description": "High End Restaurant where Abe Froman Eats.", 
+                  "name": "Chez Quis", 
+                  "address": "22 W Schiller St, Chicago, IL 60610"
+                }
+              ], 
+              "title": "BatchProjectImportRequest"
+            }
           }
         ], 
-        "produces": [
-          "application/json", 
-          "application/xml"
-        ], 
         "tags": [
-          "Batch Export"
+          "Batch Import"
         ], 
-        "summary": "Retrieve the processing status of a workshift export batch.", 
+        "summary": "Post a new batch of project data to import into Rhumbix.", 
         "security": [
           {
             "RMBXApiAuthorizer": []
@@ -677,8 +667,68 @@
             "api_key": []
           }
         ], 
-        "operationId": "batchWorkshiftExportStatus", 
-        "description": "Retrieve the processing status of a workshift export batch using the batch_key value that was returned when the batch was created.  After creating a new export batch, you should poll this endpoint to monitor the status as your batch is processed asynchronously.  When the returned status is \"Complete\", retrieve your exported data by calling the export results method."
+        "operationId": "batchProjectImport", 
+        "x-code-samples": [
+          {
+            "lang": "Shell", 
+            "source": "curl -X POST -H \"Content-Type: application/json\" \\\n-H \"x-api-key: foobarbazbuz\" \\\n-d '[{\"job_number\": \"7468652064756465\", \"name\": \"Hollywood Star \\\nLanes\",\"description\": \"\",\"address\": \"5227 Santa Monica \\\nBoulevard, Los Angeles, CA 90029\",\"cost_codes\": [{\"code\": \\\n\"18-10048\",\"description\": \"Plumbing\",\"units\": \"feet\"},\\\n{\"code\": \"18-10012\",\"description\": \"Heating\",\"units\": \"\"}]},\\\n{\"job_number\": \"73617665666572726973\",\"name\": \"Chez Quis\",\\\n\"description\": \"High End Restaurant where Abe Froman Eats.\",\\\n\"address\": \"22 W Schiller St, Chicago, IL 60610\",\"cost_codes\": []}]' \\\nhttps://async-api.dev.rhumbix.com/V1_0_1/greatco/batch/project/import\n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+          }, 
+          {
+            "lang": "Python", 
+            "source": "import requests\ndata = [\n    {\n        'job_number': '7468652064756465', \n        'name': 'Hollywood Star Lanes',\n        'description': '',\n        'address': '5227 Santa Monica Boulevard, Los Angeles, CA 90029',\n        'cost_codes': [\n            {\n                'code': '18-10048',\n                'description': 'Plumbing',\n                'units': 'feet'\n            },\n            {\n                'code': '18-10012',\n                'description': 'Heating',\n                'units': ''\n            }\n        ]\n    },\n    {\n        'job_number': '73617665666572726973',\n        'name': 'Chez Quis',\n        'description': 'High End Restaurant where Abe Froman Eats.',\n        'address': '22 W Schiller St, Chicago, IL 60610',\n        'cost_codes': []\n    }\n]\n\nheaders = {\n    'x-api-key': 'foobarbazbuz', \n    'Accept': 'application/json', \n    'Content-Type': 'application/json'\n}\n\ncompany_key = 'greatco'\nurl = 'https://async-api.dev.rhumbix.com/V1_0_1/{}'\\\n      '/batch/project/import'.format(company_key)\nresult = requests.post(url, headers=headers, json=data)\nprint result.json() \n# {'batch_key': '1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90'}"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }, 
+            "description": "batch successfully posted", 
+            "schema": {
+              "title": "BatchProjectImportResponse", 
+              "type": "object", 
+              "example": {
+                "batch_key": "1234abcd-56ef-gh78-ijkl-mnopqrstuvwx90"
+              }, 
+              "properties": {
+                "batch_key": {
+                  "$ref": "#/definitions/BatchKey"
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "options": {
+        "responses": {
+          "200": {
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }, 
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              }, 
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }, 
+            "description": "ok"
+          }
+        }, 
+        "produces": [
+          "application/json"
+        ], 
+        "tags": [
+          "CORS"
+        ], 
+        "summary": "Returns appropriate headers to enable CORS for cross-domain API requests", 
+        "consumes": [
+          "application/json"
+        ], 
+        "operationId": "batchProjectImportOptions"
       }
     }, 
     "/{company_key}/batch/employee/import/{batch_key}/status": {
@@ -765,6 +815,11 @@
             }
           }, 
           "403": {
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }, 
             "description": "url does not exist yet but will when batch queues up", 
             "schema": {
               "title": "BatchStatusResponse", 

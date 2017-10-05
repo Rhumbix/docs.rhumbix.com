@@ -615,7 +615,8 @@
               "type": "array", 
               "example": [
                 {
-                  "job_number": "7468652064756465", 
+                  "status": "INACTIVE", 
+                  "description": "New Bowling Alley", 
                   "cost_codes": [
                     {
                       "units": "feet", 
@@ -628,12 +629,13 @@
                       "description": "Heating"
                     }
                   ], 
-                  "description": "New Bowling Alley", 
-                  "name": "Hollywood Star Lanes", 
-                  "address": "5227 Santa Monica Boulevard, Los Angeles, CA 90029"
+                  "address": "5227 Santa Monica Boulevard, Los Angeles, CA 90029", 
+                  "job_number": "7468652064756465", 
+                  "name": "Hollywood Star Lanes"
                 }, 
                 {
-                  "job_number": "73617665666572726973", 
+                  "status": "ACTIVE", 
+                  "description": "High End Restaurant where Abe Froman Eats.", 
                   "cost_codes": [
                     {
                       "units": "", 
@@ -646,9 +648,9 @@
                       "description": "Platform Conduit"
                     }
                   ], 
-                  "description": "High End Restaurant where Abe Froman Eats.", 
-                  "name": "Chez Quis", 
-                  "address": "22 W Schiller St, Chicago, IL 60610"
+                  "address": "22 W Schiller St, Chicago, IL 60610", 
+                  "job_number": "73617665666572726973", 
+                  "name": "Chez Quis"
                 }
               ], 
               "title": "BatchProjectImportRequest"
@@ -1165,7 +1167,14 @@
       ], 
       "type": "object", 
       "properties": {
-        "job_number": {
+        "status": {
+          "enum": [
+            "INACTIVE", 
+            "ACTIVE"
+          ], 
+          "type": "string"
+        }, 
+        "description": {
           "type": "string"
         }, 
         "cost_codes": {
@@ -1190,13 +1199,13 @@
           }, 
           "type": "array"
         }, 
-        "description": {
+        "address": {
+          "type": "string"
+        }, 
+        "job_number": {
           "type": "string"
         }, 
         "name": {
-          "type": "string"
-        }, 
-        "address": {
           "type": "string"
         }
       }, 

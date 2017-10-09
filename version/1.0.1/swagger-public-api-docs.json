@@ -640,11 +640,13 @@
                     {
                       "units": "", 
                       "code": "HF-669", 
+                      "is_active": false, 
                       "description": "Electrical Gear"
                     }, 
                     {
                       "units": "meters", 
                       "code": "HF-770", 
+                      "is_active": true, 
                       "description": "Platform Conduit"
                     }
                   ], 
@@ -1249,6 +1251,9 @@
         }, 
         "code": {
           "type": "string"
+        }, 
+        "is_active": {
+          "type": "boolean"
         }, 
         "description": {
           "type": "string"

@@ -1195,6 +1195,9 @@
               "code": {
                 "type": "string"
               }, 
+              "is_active": {
+                "type": "boolean"
+              }, 
               "description": {
                 "type": "string"
               }
@@ -1253,9 +1256,6 @@
         }, 
         "code": {
           "type": "string"
-        }, 
-        "is_active": {
-          "type": "boolean"
         }, 
         "description": {
           "type": "string"

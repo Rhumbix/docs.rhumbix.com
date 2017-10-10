@@ -621,11 +621,13 @@
                     {
                       "units": "feet", 
                       "code": "18-10048", 
+                      "is_active": true, 
                       "description": "Plumbing"
                     }, 
                     {
                       "units": "", 
                       "code": "18-10012", 
+                      "is_active": true, 
                       "description": "Heating"
                     }
                   ], 
@@ -640,11 +642,13 @@
                     {
                       "units": "", 
                       "code": "HF-669", 
+                      "is_active": true, 
                       "description": "Electrical Gear"
                     }, 
                     {
                       "units": "meters", 
                       "code": "HF-770", 
+                      "is_active": true, 
                       "description": "Platform Conduit"
                     }
                   ], 
@@ -1249,6 +1253,9 @@
         }, 
         "code": {
           "type": "string"
+        }, 
+        "is_active": {
+          "type": "boolean"
         }, 
         "description": {
           "type": "string"

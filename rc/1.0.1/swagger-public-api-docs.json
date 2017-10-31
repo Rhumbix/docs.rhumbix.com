@@ -1106,7 +1106,8 @@
           "type": "string"
         }, 
         "company_supplied_id": {
-          "type": "string"
+          "type": "string",
+          "description": "Unique id for each employee"
         }, 
         "classification": {
           "type": "string"

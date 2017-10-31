@@ -604,7 +604,7 @@
             "in": "path"
           }, 
           {
-            "description": "An object that contains project data that you would like to import into Rhumbix.", 
+            "description": "An object that contains project data that you would like to import into Rhumbix. \n\n**Unique Constraints:** _[ Project + Code + Description ]_  \n\n\n\nThe CostCode fields `code` and `description` form a unique constraint within a Project. Do not pass in multiples of the same code+description combination. \n```json\n# This will ERROR because there are two \"10-200\" codes with the same \"Conduit\" description\n{\n    \"job_number\": \"JOB314\",\n    \"name\": \"Mission Impossible\",\n    \"cost_codes\": [\n        {\n            \"code\": \"10-200\",\n            \"description\": \"Conduit\",\n            \"units\": \"feet\",\n            \"is_active\": true\n        },\n        {\n            \"code\": \"10-200\",\n            \"description\": \"Conduit\",\n            \"units\": \"meters\",\n            \"is_active\": false\n        }\n    ]\n}\n```",
             "required": true, 
             "in": "body", 
             "name": "batch_request", 

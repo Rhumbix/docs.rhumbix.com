@@ -339,10 +339,12 @@
                         "work_components": [
                           {
                             "cost_code": {
-                              "units": "", 
                               "code": "HF-669", 
+                              "group": "HF", 
                               "description": "Electrical Gear", 
-                              "project_job_number": "73617665666572726973"
+                              "project_job_number": "73617665666572726973", 
+                              "erp_units": "", 
+                              "units": ""
                             }, 
                             "over_time_minutes": 0, 
                             "double_time_minutes": 0, 
@@ -350,10 +352,12 @@
                           }, 
                           {
                             "cost_code": {
-                              "units": "meters", 
                               "code": "HF-770", 
+                              "group": "HF", 
                               "description": "Platform Conduit", 
-                              "project_job_number": "73617665666572726973"
+                              "project_job_number": "73617665666572726973", 
+                              "erp_units": "", 
+                              "units": "meters"
                             }, 
                             "over_time_minutes": 60, 
                             "double_time_minutes": 0, 
@@ -377,10 +381,12 @@
                         "work_components": [
                           {
                             "cost_code": {
-                              "units": "meters", 
                               "code": "HF-770", 
+                              "group": "HF", 
                               "description": "Platform Conduit", 
-                              "project_job_number": "73617665666572726973"
+                              "project_job_number": "73617665666572726973", 
+                              "erp_units": "", 
+                              "units": "meters"
                             }, 
                             "over_time_minutes": 0, 
                             "double_time_minutes": 0, 
@@ -422,10 +428,12 @@
                         "work_components": [
                           {
                             "cost_code": {
-                              "units": "", 
                               "code": "HF-669", 
+                              "group": "HF", 
                               "description": "Electrical Gear", 
-                              "project_job_number": "73617665666572726973"
+                              "project_job_number": "73617665666572726973", 
+                              "erp_units": "", 
+                              "units": ""
                             }, 
                             "over_time_minutes": 0, 
                             "double_time_minutes": 0, 
@@ -604,7 +612,7 @@
             "in": "path"
           }, 
           {
-            "description": "An object that contains project data that you would like to import into Rhumbix. \n\n**Unique Constraints:** _[ Project + Code + Description ]_  \n\n\n\nThe CostCode fields `code` and `description` form a unique constraint within a Project. Do not pass in multiples of the same code+description combination. \n```json\n# This will ERROR because there are two \"10-200\" codes with the same \"Conduit\" description\n{\n    \"job_number\": \"JOB314\",\n    \"name\": \"Mission Impossible\",\n    \"cost_codes\": [\n        {\n            \"code\": \"10-200\",\n            \"description\": \"Conduit\",\n            \"units\": \"feet\",\n            \"is_active\": true\n        },\n        {\n            \"code\": \"10-200\",\n            \"description\": \"Conduit\",\n            \"units\": \"meters\",\n            \"is_active\": false\n        }\n    ]\n}\n```", 
+            "description": "An object that contains project data that you would like to import into Rhumbix. \n\n**Unique Constraints:** _[ Project + Code + Description ]_  \n\n\n\nThe CostCode fields `code` and `description` form a unique constraint within a Project. Do not pass in multiples of the same code+description combination. `description` **_can_** be an empty string: \"\". \n```json\n# This will ERROR because there are two \"10-200\" codes with the same \"Conduit\" description\n{\n    \"job_number\": \"JOB314\",\n    \"name\": \"Mission Impossible\",\n    \"cost_codes\": [\n        {\n            \"code\": \"10-200\",\n            \"description\": \"Conduit\",\n            \"units\": \"feet\",\n            \"is_active\": true\n        },\n        {\n            \"code\": \"10-200\",\n            \"description\": \"Conduit\",\n            \"units\": \"meters\",\n            \"is_active\": false\n        }\n    ]\n}\n```", 
             "required": true, 
             "in": "body", 
             "name": "batch_request", 
@@ -619,15 +627,18 @@
                   "description": "New Bowling Alley", 
                   "cost_codes": [
                     {
-                      "units": "feet", 
                       "code": "18-10048", 
+                      "group": "18", 
+                      "description": "Plumbing", 
                       "is_active": true, 
-                      "description": "Plumbing"
+                      "erp_units": "feet", 
+                      "units": "percent complete"
                     }, 
                     {
                       "units": "", 
-                      "code": "18-10012", 
                       "is_active": true, 
+                      "code": "18-10012", 
+                      "group": "18", 
                       "description": "Heating"
                     }
                   ], 
@@ -1106,7 +1117,7 @@
           "type": "string"
         }, 
         "company_supplied_id": {
-          "type": "string",
+          "type": "string", 
           "description": "Unique id for each employee"
         }, 
         "classification": {
@@ -1190,17 +1201,25 @@
             ], 
             "type": "object", 
             "properties": {
-              "units": {
+              "code": {
                 "type": "string"
               }, 
-              "code": {
+              "group": {
+                "type": "string"
+              }, 
+              "description": {
                 "type": "string"
               }, 
               "is_active": {
                 "type": "boolean"
               }, 
-              "description": {
-                "type": "string"
+              "erp_units": {
+                "type": "string", 
+                "description": "Units, as tracked from an accounting perspective (i.e. \"sq ft\")"
+              }, 
+              "units": {
+                "type": "string", 
+                "description": "Units, as tracked from a field perspective (i.e. \"percent complete\")"
               }
             }, 
             "title": "CostCode"

@@ -346,6 +346,7 @@
                               "erp_units": "", 
                               "units": ""
                             }, 
+                            "is_approved": true,
                             "over_time_minutes": 0, 
                             "double_time_minutes": 0, 
                             "standard_time_minutes": 240
@@ -359,6 +360,7 @@
                               "erp_units": "", 
                               "units": "meters"
                             }, 
+                            "is_approved": true,
                             "over_time_minutes": 60, 
                             "double_time_minutes": 0, 
                             "standard_time_minutes": 240
@@ -388,6 +390,7 @@
                               "erp_units": "", 
                               "units": "meters"
                             }, 
+                            "is_approved": true,
                             "over_time_minutes": 0, 
                             "double_time_minutes": 0, 
                             "standard_time_minutes": 480
@@ -435,6 +438,7 @@
                               "erp_units": "", 
                               "units": ""
                             }, 
+                            "is_approved": true,
                             "over_time_minutes": 0, 
                             "double_time_minutes": 0, 
                             "standard_time_minutes": 240
